@@ -1,0 +1,123 @@
+Since Solidity is a static language, variables are defined at compile time with particular data types. For the duration of the variable, you will not be able to modify the data type. It implies that it can only hold values that are appropriate for a given data type. uint8, for instance, may only hold integers between 0 and 255. Negative values and numbers larger than 255 cannot be stored. 
+
+For a better understanding of the topic, take a look at the code:
+
+// SPDX-License-Identifier: MIT
+ 
+pragma solidity 0.8.7;
+ 
+contract Example{
+    function demo() returns (uint){
+        uint8 var=10;
+        var=300; //error
+ 
+    }
+}
+Implicit vs Explicit Conversions in Solidity
+
+Every programming language has some functionality for conversion.
+
+In addition, Solidity permits type conversion. In Solidity, type conversion can happen in three different ways:
+
+By the use of variables
+Whenever arguments are passed to functions
+Whenever operators are used
+Conversion is possible both implicitly and explicitly in Solidity.
+
+Implicit Conversion
+
+Implicit conversion is feasible given that and no information is lost, the Solidity compiler will implicitly allow you to convert two data types. 
+
+For instance, uint8 converts to uint256 but int8 can’t be converted to uint16 because int8 can have negative values, which uint256 does not permit.
+
+uint8 to uint16 = No Error
+int120 to int256= No Error
+int8 to uint256= Error
+Solidity will not permit any kind of conversion when there are chances of losing some information.
+
+For example, if we assign int8 with the value -5 and try to convert it into an uint256 number, you will be warned because the negation would have to be removed and that would lead to loss of information. 
+
+Explicit  Conversion
+
+When a compiler cannot conduct implicit conversion due to data loss or because a value holding data does not fall inside a specific data type range, explicit conversion is necessary. For explicit conversion, Solidity offers a method for each value type. Uint16 to Uint8 conversion is an example of an explicit conversion. Such circumstances may result in data loss.
+
+For example
+
+uint256 a = 125;
+
+bytes32 b = bytes32(a);
+
+Be careful while explicitly converting one type to another because this could lead to unexpected behavior and enable you to get around some compiler security safeguards.
+
+Size and conversions
+
+Converting to a larger type:
+
+It will convert the variable to a larger data type than the initial data type of the variable.
+
+Example: uint16 to uint32
+
+Converting to a smaller type:
+
+It will convert the variable to a smaller data type than the initial data type of the variable.
+
+Example: uint64 to uint32
+
+Conversions from uintM to bytesN
+
+The guidelines for transforming variables a and b are listed below. To better comprehend the potential conversions, let’s use the structure below.
+
+uintM a, where M = an 8-bits range from uint8 to uint256.
+bytesN b, where N = a 1-byte range from bytes1 to bytes32.
+Note: Implicit conversion is not possible and as long as bytesN and the uintM are equal in size, explicit conversion is permitted (the number of bits M is equal to the number of bytes N).
+
+
+From bytesN to uintM conversion
+
+In the reverse order, the same principles apply as before.
+
+If the size of the bytesN and uintM are equal, explicit conversion is permitted (the number of bits M is equivalent to the number of bytes N).
+
+Table Comparison
+
+The table below will help you to remember the possible conversions.
+
+uint48	bytes6
+uint56	bytes7
+uint64	bytes8
+uint72	bytes9
+uint80	bytes10
+uint88	bytes11
+uint96	bytes12
+uint104	bytes13
+uint112	bytes14
+uint120	bytes15
+uint128	bytes16
+uint136	bytes17
+uint144	bytes18
+uint152	bytes19
+uint160	bytes20
+uint168	bytes21
+uint176	bytes22
+uint184	bytes23
+uint192	bytes24
+uint200	bytes25
+uint208	bytes26
+uint216	bytes27
+uint224	bytes28
+uint232	bytes29
+uint240	bytes30
+uint248	bytes31
+uint256	bytes32
+Converting between strings and bytes:
+
+It is not permitted to convert implicitly
+The conversion has to be explicit
+Conclusion
+
+We’ll finish this lesson with a concise explanation of explicit vs implicit conversion in Solidity.
+
+In Solidity, there is a chance that some data will be lost during the conversion from type A to type B given (type A is a higher data type than type B).
+
+With implicit conversion, you need not worry about the possibility of information loss. The compiler will decline to compile and report an error if some data is genuinely lost.
+When using explicit conversion, you must always be mindful that some information may be lost. This is because the compiler will permit you to compile & will also permit the (possible) loss of information, due to you wanting it explicitly.
